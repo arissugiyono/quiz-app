@@ -10,33 +10,46 @@ class QuestionsScreen extends StatefulWidget {
 }
 
 class _QuestionsScreenState extends State<QuestionsScreen> {
-  final currentQuestions = questions[0];
+  var currentQuestionIndex = 0;
+
+  void answerQuestion() {
+    // currentQuestionIndex = currentQuestionIndex + 1;
+    // currentQuestionIndex += 1;
+    setState(() {
+      currentQuestionIndex++; //TODO: menambahn nilai satu satu
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final currentQuestions = questions[currentQuestionIndex];
     return SizedBox(
       width: double.infinity,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            margin: EdgeInsets.all(15),
-            child: Text(
-              currentQuestions.text,
+      child: Container(
+        margin: EdgeInsets.all(20),
+        child: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                currentQuestions.text,
+                textAlign: TextAlign.center,
 
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.white,
-                decoration: TextDecoration.none,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  decoration: TextDecoration.none,
+                ),
               ),
-            ),
+              const SizedBox(height: 30),
+              ...currentQuestions.getShuffledAnswers().map((answer) {
+                return AnswerButton(answerText: answer, onTap: answerQuestion);
+              }),
+            ],
           ),
-          const SizedBox(height: 30),
-          ...currentQuestions.answers.map((answer) {
-            return AnswerButton(answerText: answer, onTap: () {});
-          }),
-          
-        ],
+        ),
       ),
     );
   }
