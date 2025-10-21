@@ -6,9 +6,11 @@ class QuizQuestion {
 
 
 //TODO : Untuk pengocok jawaban
-  List<String> getShuffledAnswers() {
+  List<String> get shuffledAnswers {
     final shuffledList = List.of(answers);
     shuffledList.shuffle();
     return shuffledList;
   }
+
+
 }
